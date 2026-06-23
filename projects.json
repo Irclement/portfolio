@@ -1,0 +1,64 @@
+[
+  {
+    "id": 4,
+    "title": "EGLISE EPR",
+    "description": "gestion centralisé d'une Eglise",
+    "category": "web",
+    "tags": [
+      "PHP",
+      "AJAX",
+      "JS",
+      "SQL"
+    ],
+    "image": "assets/projects/project-4-1.png",
+    "link": "",
+    "icon": "fas fa-globe",
+    "userCreated": true
+  },
+  {
+    "id": 3,
+    "title": "GOGO VENTE",
+    "description": "site web de vente en ligne",
+    "category": "web",
+    "tags": [
+      "PHP",
+      "AJAX",
+      "JS"
+    ],
+    "image": "assets/projects/project-3-1.png",
+    "link": "",
+    "icon": "fas fa-globe",
+    "userCreated": true
+  },
+  {
+    "id": 2,
+    "title": "CARTE GEOLOCALISATION",
+    "description": "carte interactif MSF sud-kivu",
+    "category": "web",
+    "tags": [
+      "PHP",
+      "JS",
+      "AJAX",
+      "OPENSTREETMAP"
+    ],
+    "image": "assets/projects/project-2-1.png",
+    "link": "",
+    "icon": "fas fa-globe",
+    "userCreated": true
+  },
+  {
+    "id": 1,
+    "title": "BukavuImmo",
+    "description": "La première plateforme de location immobilière entièrement dédiée à Bukavu.\nDes milliers de biens à louer dans les communes d'Ibanda, Kadutu et Bagira.",
+    "category": "web",
+    "tags": [
+      "PHP",
+      "AJAX",
+      "JS"
+    ],
+    "image": "assets/projects/project-1-1.png",
+    "link": "",
+    "icon": "fas fa-globe",
+    "userCreated": true
+  }
+]
