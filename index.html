@@ -1,932 +1,558 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Katanga Clément | Portfolio — Développeur Web</title>
-    <!-- Google Fonts & Font Awesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>KATANGA CLEMENT — Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <link rel="stylesheet" href="style.css"/>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.5;
-            transition: background-color 0.3s ease, color 0.2s ease;
-        }
-
-        /* Thème clair (défaut) */
-        :root {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-surface: #ffffff;
-            --text-primary: #0f172a;
-            --text-secondary: #334155;
-            --text-muted: #64748b;
-            --border-light: #e2e8f0;
-            --accent: #3b82f6;
-            --accent-dark: #2563eb;
-            --accent-light: #eff6ff;
-            --card-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
-            --nav-bg: rgba(255,255,255,0.9);
-            --skill-bg: #f1f5f9;
-        }
-
-        body.dark {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-surface: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
-            --border-light: #334155;
-            --accent: #60a5fa;
-            --accent-dark: #3b82f6;
-            --accent-light: #1e293b;
-            --card-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
-            --nav-bg: rgba(15,23,42,0.9);
-            --skill-bg: #334155;
-        }
-
-        /* Layout avec side-nav professionnel */
-        .side-nav {
-            position: fixed;
-            left: 0;
-            top: 0;
-            height: 100vh;
-            width: 280px;
-            background: var(--nav-bg);
-            backdrop-filter: blur(12px);
-            border-right: 1px solid var(--border-light);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 2rem 1.5rem;
-            z-index: 100;
-            transition: all 0.3s;
-        }
-
-        .nav-logo .logo-text {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), #8b5cf6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .nav-links {
-            list-style: none;
-            margin-top: 3rem;
-        }
-
-        .nav-links li {
-            margin: 1.5rem 0;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 12px;
-            transition: all 0.2s;
-        }
-
-        .nav-item i {
-            width: 24px;
-            font-size: 1.2rem;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            background: var(--accent-light);
-            color: var(--accent);
-        }
-
-        .nav-social {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .nav-social a {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            transition: 0.2s;
-        }
-
-        .nav-social a:hover {
-            color: var(--accent);
-        }
-
-        .theme-toggle {
-            position: fixed;
-            top: 1.5rem;
-            right: 2rem;
-            z-index: 101;
-            background: var(--bg-surface);
-            width: 44px;
-            height: 44px;
-            border-radius: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--border-light);
-            color: var(--text-primary);
-            transition: 0.2s;
-        }
-
-        .main-content {
-            margin-left: 280px;
-        }
-
-        .section {
-            padding: 5rem 3rem;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-tag {
-            display: inline-block;
-            background: var(--accent-light);
-            color: var(--accent);
-            padding: 0.25rem 1rem;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .separator {
-            width: 60px;
-            height: 3px;
-            background: var(--accent);
-            margin: 1rem auto 0;
-            border-radius: 4px;
-        }
-
-        /* Hero */
-        .hero-section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            background: var(--bg-secondary);
-        }
-
-        .hero-container {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: left;
-        }
-
-        .hero-badge {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        .hero-title {
-            font-size: 4rem;
-            font-weight: 800;
-            line-height: 1.2;
-            background: linear-gradient(to right, var(--text-primary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 1rem;
-        }
-
-        .hero-subtitle {
-            font-size: 1.4rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-description {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            max-width: 600px;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary, .btn-outline {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.8rem 1.8rem;
-            border-radius: 40px;
-            font-weight: 600;
-            transition: 0.2s;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: white;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background: var(--accent-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            border: 1px solid var(--border-light);
-            color: var(--text-primary);
-            background: transparent;
-        }
-
-        .btn-outline:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .scroll-indicator {
-            margin-top: 4rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
-
-        /* About grid avec photo */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-text p {
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .about-info {
-            margin: 2rem 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            color: var(--text-primary);
-        }
-
-        .about-image {
-            display: flex;
-            justify-content: center;
-        }
-
-        .image-frame {
-            width: 320px;
-            height: 320px;
-            border-radius: 50%;
-            overflow: hidden;
-            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
-            border: 4px solid var(--accent);
-        }
-
-        .profile-photo {
+        .avatar-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
+            border-radius: 35% 65% 70% 30% / 35% 45% 55% 65%;
+            animation: morph 10s infinite;
         }
-
-        /* Projets */
-        .project-filters {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            background: transparent;
-            border: 1px solid var(--border-light);
-            padding: 0.5rem 1.2rem;
-            border-radius: 40px;
-            font-weight: 500;
-            cursor: pointer;
-            color: var(--text-secondary);
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--accent);
-            color: white;
-            border-color: var(--accent);
-        }
-
-        .project-admin-link {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-card {
-            background: var(--bg-surface);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            border: 1px solid var(--border-light);
-            transition: transform 0.2s;
-        }
-
-        .project-card:hover {
-            transform: translateY(-6px);
-        }
-
         .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .project-card .project-image {
             height: 200px;
-            background: linear-gradient(135deg, var(--accent-light), #cbd5e1);
+            background: var(--bg-secondary);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            color: var(--accent);
-        }
-
-        .project-info {
-            padding: 1.5rem;
-        }
-
-        .project-info h3 {
-            margin-bottom: 0.5rem;
-        }
-
-        .project-tags {
-            display: flex;
-            gap: 0.5rem;
-            margin: 1rem 0;
-            flex-wrap: wrap;
-        }
-
-        .project-tags span {
-            background: var(--skill-bg);
-            padding: 0.2rem 0.7rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-        }
-
-        /* Skills */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-category {
-            background: var(--bg-surface);
-            border-radius: 24px;
-            padding: 1.8rem;
-            border: 1px solid var(--border-light);
-        }
-
-        .skill-category h3 {
-            margin-bottom: 1.5rem;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .skill {
-            margin-bottom: 1.2rem;
-        }
-
-        .skill span {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 0.3rem;
-        }
-
-        .skill-bar {
-            height: 8px;
-            background: var(--skill-bg);
-            border-radius: 10px;
             overflow: hidden;
         }
-
-        .skill-progress {
+        .project-card .project-image img {
+            width: 100%;
             height: 100%;
-            background: var(--accent);
-            border-radius: 10px;
-            width: 0%;
+            object-fit: cover;
         }
-
-        /* Contact */
-        .contact-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+        .project-card .project-image i {
+            font-size: 3rem;
+            color: var(--text-muted);
+            opacity: 0.5;
         }
-
-        .contact-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .contact-details {
-            list-style: none;
-            margin: 2rem 0;
-        }
-
-        .contact-details li {
+        .admin-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            background: var(--accent-primary);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px var(--accent-glow);
+            transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin: 1rem 0;
+            gap: 8px;
         }
-
-        .contact-details a {
-            color: var(--text-primary);
-            text-decoration: none;
-        }
-
-        .contact-social {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .contact-form .form-group {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-form input, .contact-form textarea {
-            width: 100%;
-            padding: 1rem 1rem 1rem 2.8rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            font-family: inherit;
-            color: var(--text-primary);
-            transition: 0.2s;
-        }
-
-        .contact-form i {
-            position: absolute;
-            left: 1rem;
-            top: 1rem;
-            color: var(--text-muted);
-        }
-
-        .full-width {
-            width: 100%;
-            justify-content: center;
-        }
-
-        .form-feedback {
-            margin-top: 1rem;
-            font-size: 0.85rem;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            border-top: 1px solid var(--border-light);
-            color: var(--text-muted);
-        }
-
-        @media (max-width: 900px) {
-            .side-nav {
-                transform: translateX(-100%);
-                width: 260px;
-            }
-            .main-content {
-                margin-left: 0;
-            }
-            .theme-toggle {
-                right: 1rem;
-                top: 1rem;
-            }
-            .about-grid, .contact-wrapper {
-                grid-template-columns: 1fr;
-            }
-            .section {
-                padding: 3rem 1.5rem;
-            }
-            .hero-title {
-                font-size: 2.8rem;
-            }
-        }
-
-        @media (min-width: 901px) {
-            .mobile-menu-btn {
-                display: none;
-            }
+        .admin-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--accent-glow);
         }
     </style>
 </head>
 <body>
-<div class="theme-toggle" id="themeToggle">
-    <i class="fas fa-moon"></i>
-</div>
-
-<nav class="side-nav" id="sideNav">
-    <div class="nav-logo">
-        <span class="logo-text">KC</span>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
     </div>
-    <ul class="nav-links">
-        <li><a href="#accueil" class="nav-item active"><i class="fas fa-home"></i><span>Accueil</span></a></li>
-        <li><a href="#a-propos" class="nav-item"><i class="fas fa-user"></i><span>À propos</span></a></li>
-        <li><a href="#projets" class="nav-item"><i class="fas fa-code-branch"></i><span>Projets</span></a></li>
-        <li><a href="#competences" class="nav-item"><i class="fas fa-cogs"></i><span>Compétences</span></a></li>
-        <li><a href="#contact" class="nav-item"><i class="fas fa-paper-plane"></i><span>Contact</span></a></li>
-    </ul>
-    <div class="nav-social">
-        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-        <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#" target="_blank"><i class="fab fa-dribbble"></i></a>
-    </div>
-</nav>
 
-<main class="main-content">
-    <section id="accueil" class="section hero-section">
-        <div class="hero-container">
-            <div class="hero-badge">👋 Bonjour, je suis</div>
-            <h1 class="hero-title">Katanga Clément</h1>
-            <p class="hero-subtitle">Développeur Web — PHP · JavaScript · WordPress</p>
-            <div class="hero-description">
-                Développeur web spécialisé en PHP, JavaScript et WordPress. Je crée des sites performants et maintenables avec une attention particulière au design et à l'accessibilité.
-            </div>
-            <div class="hero-actions">
-                <a href="#projets" class="btn-primary">Voir mes travaux <i class="fas fa-arrow-right"></i></a>
-                <a href="#contact" class="btn-outline">Me contacter</a>
-            </div>
-            <div class="scroll-indicator">
-                <span>Découvrir</span>
-                <i class="fas fa-chevron-down"></i>
-            </div>
+    <!-- Admin Link -->
+    <a href="admin-projects.html" class="admin-link">
+        <i class="fas fa-crown"></i> Admin
+    </a>
+
+    <!-- Side Navigation -->
+    <nav class="side-nav">
+        <div class="nav-logo">
+            <span class="logo-text">K.C.</span>
         </div>
-    </section>
-
-    <section id="a-propos" class="section about-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Mon histoire</span>
-                <h2>À propos de moi</h2>
-                <div class="separator"></div>
-            </div>
-            <div class="about-grid">
-                <div class="about-text">
-                    <p>Bonjour — je suis Katanga Clément, développeur web. J'exerce principalement avec PHP, JavaScript et WordPress pour créer des sites et applications fiables et faciles à maintenir.</p>
-                    <p>Mes compétences incluent HTML, CSS, JavaScript, PHP et l'intégration WordPress. Je privilégie un code propre, optimisé pour la performance et l'expérience utilisateur.</p>
-                    <div class="about-info">
-                        <div class="info-item"><i class="fas fa-map-marker-alt"></i> Basé en République démocratique du Congo</div>
-                        <div class="info-item"><i class="fas fa-laptop-code"></i> Développement web & WordPress</div>
-                        <div class="info-item"><i class="fas fa-award"></i> Projets clients & sites vitrines</div>
-                    </div>
-                    <a href="#" class="btn-outline btn-small">Télécharger CV <i class="fas fa-download"></i></a>
-                </div>
-                <div class="about-image">
-                    <div class="avatar-placeholder" style="background: none; overflow: hidden;">
-                        <img src="profile.jpg" alt="EVOLUDIA CREATIVE" style="width: 100%; height: 100%; object-fit: cover; border-radius: 35% 65% 70% 30% / 35% 45% 55% 65%;">
-                    </div>
-                </div>
-            </div>
+        <ul class="nav-links">
+            <li><a href="#home" class="nav-item active"><i class="fas fa-home"></i><span>Accueil</span></a></li>
+            <li><a href="#about" class="nav-item"><i class="fas fa-user"></i><span>À propos</span></a></li>
+            <li><a href="#projects" class="nav-item"><i class="fas fa-code"></i><span>Projets</span></a></li>
+            <li><a href="#skills" class="nav-item"><i class="fas fa-cog"></i><span>Compétences</span></a></li>
+            <li><a href="#contact" class="nav-item"><i class="fas fa-envelope"></i><span>Contact</span></a></li>
+        </ul>
+        <div class="nav-social">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
         </div>
-    </section>
+    </nav>
 
-    <section id="projets" class="section projects-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Réalisations</span>
-                <h2>Projets récents</h2>
-                <div class="separator"></div>
-            </div>
-            <div class="projects-grid" id="projectsGrid"></div>
-        </div>
-    </section>
+    <!-- Main Content -->
+    <main class="main-content">
 
-    <section id="competences" class="section skills-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Expertises</span>
-                <h2>Compétences techniques</h2>
-                <div class="separator"></div>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3><i class="fas fa-code"></i> Développement Web</h3>
-                    <div class="skill-items">
-                        <div class="skill"><span>PHP</span><div class="skill-bar"><div class="skill-progress" style="width: 92%"></div></div></div>
-                        <div class="skill"><span>JavaScript (ES6+)</span><div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div></div>
-                        <div class="skill"><span>HTML5 & CSS3</span><div class="skill-bar"><div class="skill-progress" style="width: 95%"></div></div></div>
-                        <div class="skill"><span>WordPress & Thèmes</span><div class="skill-bar"><div class="skill-progress" style="width: 89%"></div></div></div>
-                    </div>
+        <!-- ==================== HERO ==================== -->
+        <section id="home" class="section hero-section">
+            <div class="container hero-container">
+                <span class="hero-badge"><i class="fas fa-crown"></i> KATANGA CLEMENT</span>
+                <h1 class="hero-title">Développeur Full-Stack</h1>
+                <p class="hero-subtitle">Créateur d'expériences web modernes</p>
+                <p class="hero-description">
+                    Passionné par le code, le design et l'innovation. Je transforme vos idées en produits digitaux performants et élégants.
+                </p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn-primary"><i class="fas fa-rocket"></i> Voir mes projets</a>
+                    <a href="#contact" class="btn-outline"><i class="fas fa-paper-plane"></i> Me contacter</a>
                 </div>
-                <div class="skill-category">
-                    <h3><i class="fas fa-database"></i> Backend & Bases de données</h3>
-                    <div class="skill-items">
-                        <div class="skill"><span>APIs REST (PHP / Node)</span><div class="skill-bar"><div class="skill-progress" style="width: 86%"></div></div></div>
-                        <div class="skill"><span>MySQL / MariaDB</span><div class="skill-bar"><div class="skill-progress" style="width: 84%"></div></div></div>
-                        <div class="skill"><span>Gestion d'hébergement (LAMP)</span><div class="skill-bar"><div class="skill-progress" style="width: 82%"></div></div></div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3><i class="fas fa-tools"></i> Outils & Bonnes pratiques</h3>
-                    <div class="skill-items">
-                        <div class="skill"><span>Git / GitHub</span><div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div></div>
-                        <div class="skill"><span>Responsive Design & Accessibilité</span><div class="skill-bar"><div class="skill-progress" style="width: 88%"></div></div></div>
-                        <div class="skill"><span>Debug & Optimisation (performance)</span><div class="skill-bar"><div class="skill-progress" style="width: 86%"></div></div></div>
-                    </div>
+                <div class="scroll-indicator">
+                    <span>Défiler</span>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="contact" class="section contact-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Collaborons</span>
-                <h2>Parlons de votre projet</h2>
-                <div class="separator"></div>
-            </div>
-            <div class="contact-wrapper">
-                <div class="contact-info">
-                    <h3>Entrons en contact</h3>
-                    <p>Que ce soit pour une opportunité freelance, un poste créatif ou simplement discuter tech, je suis à l'écoute.</p>
-                    <ul class="contact-details">
-                        <li><i class="fas fa-envelope"></i> <a href="mailto:katangaclement89@gmail.com">katangaclement89@gmail.com</a></li>
-                        <li><i class="fas fa-phone-alt"></i> <a href="tel:+243977832416">+243 97 78 32 416</a></li>
-                        <li><i class="fab fa-github"></i> <a href="#" target="_blank">github.com/katanga</a></li>
-                    </ul>
-                    <div class="contact-social">
-                        <a href="https://x.com/clementkato6qo?s=21"><i class="fab fa-twitter"></i></a>
-                        <a href="https://www.instagram.com/katangaclementkape?igsh=Y2c1enFvbTd2NzNj&utm_source=qr"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.linkedin.com/in/katangaclement"><i class="fab fa-linkedin"></i></a>
+        <!-- ==================== ABOUT ==================== -->
+        <section id="about" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">À propos</span>
+                    <h2>Qui suis-je ?</h2>
+                    <div class="separator"></div>
+                </div>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p>
+                            Je suis <strong>KATANGA CLEMENT</strong>, un développeur full-stack basé à Bukavu. 
+                            Avec plus de 5 ans d'expérience, je conçois des solutions web sur mesure, 
+                            alliant performance, accessibilité et esthétique.
+                        </p>
+                        <p>
+                            Je maîtrise l'écosystème JavaScript (React, Node.js, Next.js) et j'ai un fort intérêt 
+                            pour l'UI/UX et les architectures cloud. Chaque projet est pour moi une opportunité 
+                            de repousser les limites du possible.
+                        </p>
+                        <div class="about-info">
+                            <span class="info-item"><i class="fas fa-map-marker-alt"></i> Bukavu, RD Congo</span>
+                            <span class="info-item"><i class="fas fa-code"></i> Full-Stack</span>
+                            <span class="info-item"><i class="fas fa-award"></i> 5+ ans d'expérience</span>
+                        </div>
+                        <a href="#contact" class="btn-primary"><i class="fas fa-handshake"></i> Travaillons ensemble</a>
+                    </div>
+                    <div class="about-image">
+                        <div class="avatar-placeholder" style="background: none; overflow: hidden; padding: 0;">
+                            <img src="profile.jpg" alt="KATANGA CLEMENT" class="avatar-img" />
+                        </div>
                     </div>
                 </div>
-                <form id="contactForm" class="contact-form">
-                    <div class="form-group">
-                        <input type="text" id="name" placeholder="Votre nom" required>
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="email" placeholder="Votre email" required>
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="message" rows="4" placeholder="Votre message..." required></textarea>
-                        <i class="fas fa-pen"></i>
-                    </div>
-                    <button type="submit" class="btn-primary full-width">Envoyer <i class="fas fa-paper-plane"></i></button>
-                    <div id="formFeedback" class="form-feedback"></div>
-                </form>
             </div>
-        </div>
-    </section>
-    <footer class="footer">
-        <p>© 2026 Katanga Clément — Développement web <i class="fas fa-heart"></i></p>
-    </footer>
-</main>
+        </section>
 
-<script>
-    // ---------- PROJETS: lecture depuis localStorage et synchronisation avec l'admin ----------
-    const STORAGE_KEY = 'user_projects_v1';
-    let currentFilter = 'all';
+        <!-- ==================== PROJECTS ==================== -->
+        <section id="projects" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Portfolio</span>
+                    <h2>Projets récents</h2>
+                    <div class="separator"></div>
+                </div>
 
-    function getDefaultProjects() {
-        return [
-            { id: 1, title: "Nebula Dashboard", description: "Plateforme analytics temps réel pour startups SaaS, interface interactive et graphiques dynamiques.", category: "web", tags: ["React", "D3.js", "Firebase"], image: "", link: "", icon: "fas fa-chart-line", userCreated: false },
-            { id: 2, title: "Bloom Studio", description: "Refonte UI/UX pour un studio créatif, design minimaliste et expérience immersive.", category: "uiux", tags: ["Figma", "Tailwind", "GSAP"], image: "", link: "", icon: "fas fa-palette", userCreated: false },
-            { id: 3, title: "EcoRide Mobile", description: "Application de covoiturage éco-responsable avec cartographie et paiement intégré.", category: "mobile", tags: ["React Native", "Node.js", "MongoDB"], image: "", link: "", icon: "fas fa-mobile-alt", userCreated: false },
-            { id: 4, title: "Artemis E-commerce", description: "Site e-commerce complet avec panier, authentification et dashboard admin.", category: "web", tags: ["Next.js", "Stripe", "Prisma"], image: "", link: "", icon: "fas fa-shopping-cart", userCreated: false },
-            { id: 5, title: "Horizon UI Kit", description: "Système de design modulaire et accessible pour développeurs & designers.", category: "uiux", tags: ["Figma", "Storybook", "Vue"], image: "", link: "", icon: "fas fa-layer-group", userCreated: false },
-            { id: 6, title: "FitTrack", description: "Application de suivi sportif avec objectifs personnalisés et partage social.", category: "mobile", tags: ["Flutter", "Firebase", "API REST"], image: "", link: "", icon: "fas fa-heartbeat", userCreated: false }
+                <!-- Filters -->
+                <div class="project-filters">
+                    <button class="filter-btn active" data-filter="all">Tous</button>
+                    <button class="filter-btn" data-filter="web">Web</button>
+                    <button class="filter-btn" data-filter="uiux">UI/UX</button>
+                    <button class="filter-btn" data-filter="mobile">Mobile</button>
+                </div>
+
+                <!-- Projects Grid -->
+                <div id="projectsGrid" class="projects-grid"></div>
+            </div>
+        </section>
+
+        <!-- ==================== SKILLS ==================== -->
+        <section id="skills" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Expertise</span>
+                    <h2>Mes compétences</h2>
+                    <div class="separator"></div>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3><i class="fas fa-code" style="color:var(--accent-primary);"></i> Frontend</h3>
+                        <div class="skill"><span>React / Next.js</span><div class="skill-bar"><div class="skill-progress" style="width:88%;"></div></div></div>
+                        <div class="skill"><span>TypeScript</span><div class="skill-bar"><div class="skill-progress" style="width:82%;"></div></div></div>
+                        <div class="skill"><span>Tailwind / CSS</span><div class="skill-bar"><div class="skill-progress" style="width:90%;"></div></div></div>
+                    </div>
+                    <div class="skill-category">
+                        <h3><i class="fas fa-server" style="color:var(--accent-primary);"></i> Backend</h3>
+                        <div class="skill"><span>Node.js / Express</span><div class="skill-bar"><div class="skill-progress" style="width:80%;"></div></div></div>
+                        <div class="skill"><span>Python / Django</span><div class="skill-bar"><div class="skill-progress" style="width:65%;"></div></div></div>
+                        <div class="skill"><span>PostgreSQL / MongoDB</span><div class="skill-bar"><div class="skill-progress" style="width:75%;"></div></div></div>
+                    </div>
+                    <div class="skill-category">
+                        <h3><i class="fas fa-paint-brush" style="color:var(--accent-primary);"></i> UI/UX</h3>
+                        <div class="skill"><span>Figma / Adobe XD</span><div class="skill-bar"><div class="skill-progress" style="width:78%;"></div></div></div>
+                        <div class="skill"><span>Design Systems</span><div class="skill-bar"><div class="skill-progress" style="width:70%;"></div></div></div>
+                        <div class="skill"><span>Prototypage</span><div class="skill-bar"><div class="skill-progress" style="width:85%;"></div></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CONTACT ==================== -->
+        <section id="contact" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Contact</span>
+                    <h2>Parlons de votre projet</h2>
+                    <div class="separator"></div>
+                </div>
+                <div class="contact-wrapper">
+                    <div class="contact-info">
+                        <h3>Restons connectés</h3>
+                        <p>Vous avez un projet, une question ou simplement envie d'échanger ? Je suis toujours ouvert aux nouvelles opportunités.</p>
+                        <ul class="contact-details">
+                            <li><i class="fas fa-envelope" style="color:var(--accent-primary);"></i> clement@katanga.com</li>
+                            <li><i class="fas fa-phone-alt" style="color:var(--accent-primary);"></i> +243 81 234 5678</li>
+                            <li><i class="fas fa-map-marker-alt" style="color:var(--accent-primary);"></i> Bukavu, Sud-Kivu</li>
+                        </ul>
+                        <div class="contact-social">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-dribbble"></i></a>
+                        </div>
+                    </div>
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="name" placeholder="Votre nom" required />
+                        </div>
+                        <div class="form-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" placeholder="Votre email" required />
+                        </div>
+                        <div class="form-group">
+                            <i class="fas fa-comment"></i>
+                            <textarea id="message" rows="4" placeholder="Votre message..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary full-width"><i class="fas fa-paper-plane"></i> Envoyer</button>
+                        <div id="formFeedback" class="form-feedback"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== FOOTER ==================== -->
+        <footer class="footer">
+            <p>&copy; 2026 KATANGA CLEMENT — Fait avec <i class="fas fa-heart"></i> à Bukavu</p>
+        </footer>
+    </main>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+        // ============================================================
+        // 1. PROJETS (données directement intégrées)
+        // ============================================================
+        const STORAGE_KEY = 'user_projects_v1';
+
+        const defaultProjects = [
+            {
+                id: 1,
+                title: "Bukavulmmo",
+                description: "Plateforme de location immobilière dédiée à Bukavu. Des milliers de biens dans les communes d'Ibanda, Kadutu et Bagira.",
+                category: "web",
+                tags: ["React", "Node.js", "MongoDB"],
+                image: "project-1-1.png",
+                link: "",
+                icon: "fas fa-home",
+                userCreated: false
+            },
+            {
+                id: 2,
+                title: "Bases Médicales",
+                description: "Application de géolocalisation des bases médicales au Sud-Kivu. Recherche et affichage des structures de santé avec GPS.",
+                category: "mobile",
+                tags: ["React Native", "Firebase", "Mapbox"],
+                image: "project-2.png",
+                link: "",
+                icon: "fas fa-map-marker-alt",
+                userCreated: false
+            },
+            {
+                id: 3,
+                title: "Gestion de stock (POO)",
+                description: "Application de gestion de stock avec catégories, produits et détails. Architecture orientée objet en PHP.",
+                category: "web",
+                tags: ["PHP", "MySQL", "Bootstrap"],
+                image: "project-3.png",
+                link: "",
+                icon: "fas fa-boxes",
+                userCreated: false
+            }
         ];
-    }
 
-    function readStoredProjects() {
-        try {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored === null) {
-                const defaults = getDefaultProjects();
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(defaults));
-                return defaults;
+        function getProjects() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored === null) {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultProjects));
+                    return defaultProjects;
+                }
+                const parsed = JSON.parse(stored);
+                if (!Array.isArray(parsed) || parsed.length === 0) {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultProjects));
+                    return defaultProjects;
+                }
+                return parsed;
+            } catch (e) {
+                return defaultProjects;
             }
-            const parsed = JSON.parse(stored);
-            if (!Array.isArray(parsed)) return [];
-            return parsed;
-        } catch (e) {
-            return [];
         }
-    }
 
-    function renderProjects(filter = 'all') {
-        currentFilter = filter;
-        const grid = document.getElementById('projectsGrid');
-        if (!grid) return;
-        const projects = readStoredProjects();
-        const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
-        grid.innerHTML = filtered.map(proj => {
-            const title = proj.title || proj.name || 'Sans titre';
-            const desc = proj.description || proj.desc || '';
-            const tags = Array.isArray(proj.tags) ? proj.tags : (typeof proj.tags === 'string' ? proj.tags.split(',') : []);
-            const iconClass = proj.icon ? proj.icon.replace(/^fa[srb]?\s*/,'') : '';
-            const iconPrefix = (proj.icon && proj.icon.startsWith('fas')) ? 'fas' : (proj.icon && proj.icon.startsWith('far') ? 'far' : 'fas');
-            const imgHtml = proj.image && proj.image.startsWith('data:') ? `<div class="project-img"><img src="${proj.image}" alt="${title}" style="width:100%;height:200px;object-fit:cover;display:block;"></div>` : `<div class="project-img"><i class="${iconPrefix} ${iconClass} fa-3x"></i></div>`;
-            return `
-                <div class="project-card" data-category="${proj.category}">
-                    ${imgHtml}
+        function saveProjects(projects) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+        }
+
+        // ============================================================
+        // 2. RENDU DES PROJETS
+        // ============================================================
+        let activeFilter = 'all';
+
+        function renderProjects() {
+            const grid = document.getElementById('projectsGrid');
+            if (!grid) return;
+
+            const allProjects = getProjects();
+            const filtered = activeFilter === 'all'
+                ? allProjects
+                : allProjects.filter(p => p.category === activeFilter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column:1/-1; text-align:center; padding:3rem;">
+                        <i class="fas fa-folder-open fa-3x" style="margin-bottom:1rem; opacity:0.5;"></i>
+                        <p>Aucun projet dans cette catégorie.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(proj => `
+                <div class="project-card" data-category="${proj.category}" data-id="${proj.id}">
+                    <div class="project-image">
+                        ${proj.image ? 
+                            `<img src="${proj.image}" alt="${proj.title}" class="project-img" loading="lazy">` :
+                            `<i class="${proj.icon || 'fas fa-briefcase'}"></i>`
+                        }
+                    </div>
                     <div class="project-info">
-                        <h3>${title}</h3>
-                        <p>${desc}</p>
-                        <div class="project-tags">${tags.map(t => `<span>${t}</span>`).join('')}</div>
+                        <h3>${proj.link ? `<a href="${proj.link}" target="_blank" rel="noopener noreferrer">${escapeHtml(proj.title)}</a>` : escapeHtml(proj.title)}</h3>
+                        <p>${escapeHtml(proj.description.substring(0, 120))}${proj.description.length > 120 ? '...' : ''}</p>
+                        <div class="project-tags">
+                            ${Array.isArray(proj.tags) ? proj.tags.map(t => `<span>${escapeHtml(t)}</span>`).join('') : ''}
+                        </div>
                     </div>
                 </div>
-            `;
-        }).join('');
-    }
-
-    // Réécoute pour synchronisation inter-onglets (l'admin déclenche un StorageEvent lors des écritures)
-    window.addEventListener('storage', (e) => {
-        if (e.key === STORAGE_KEY) {
-            renderProjects(currentFilter || 'all');
+            `).join('');
         }
-    });
 
-    // FILTRES
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const filter = btn.getAttribute('data-filter');
-            renderProjects(filter);
-        });
-    });
-
-    // THEME TOGGLE
-    const themeToggle = document.getElementById('themeToggle');
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark');
-        const icon = themeToggle.querySelector('i');
-        if (document.body.classList.contains('dark')) {
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        } else {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
         }
-    });
 
-    // CONTACT FORM SIMULATION
-    const contactForm = document.getElementById('contactForm');
-    const feedback = document.getElementById('formFeedback');
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const message = document.getElementById('message').value.trim();
-        if (!name || !email || !message) {
-            feedback.innerHTML = '<span style="color:#ef4444;">Veuillez remplir tous les champs.</span>';
-            return;
+        // ============================================================
+        // 3. FILTRES
+        // ============================================================
+        function initFilters() {
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    btns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    activeFilter = this.dataset.filter;
+                    renderProjects();
+                });
+            });
         }
-        feedback.innerHTML = '<span style="color:#10b981;">✓ Message envoyé (simulation) ! Je reviens vers vous rapidement.</span>';
-        contactForm.reset();
-        setTimeout(() => feedback.innerHTML = '', 3000);
-    });
 
-    // ACTIVE NAVIGATION + SCROLL SMOOTH
-    const sections = document.querySelectorAll('.section');
-    const navItems = document.querySelectorAll('.nav-item');
-    function updateActiveNav() {
-        let current = '';
-        const scrollPos = window.scrollY + 150;
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                current = section.getAttribute('id');
+        // ============================================================
+        // 4. THEME
+        // ============================================================
+        function initTheme() {
+            const toggle = document.getElementById('themeToggle');
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                toggle.innerHTML = '<i class="fas fa-sun"></i>';
             }
-        });
-        navItems.forEach(item => {
-            item.classList.remove('active');
-            const href = item.getAttribute('href');
-            if (href === `#${current}`) {
-                item.classList.add('active');
-            }
-        });
-    }
-    window.addEventListener('scroll', updateActiveNav);
-    updateActiveNav();
-
-    // Smooth scroll
-    document.querySelectorAll('.nav-item, .btn-primary[href^="#"], .btn-outline[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-            if (targetId && targetId.startsWith('#')) {
-                e.preventDefault();
-                const target = document.querySelector(targetId);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }
-        });
-    });
-
-    // Gestion responsive: si on veut un bouton mobile mais on garde simple pour side-nav
-    // Ajouter un gestionnaire mobile: clic sur logo ou double tap pour ouvrir? Optionnel
-    // Pour professionnalisme on peut laisser le drawer mais sur mobile on ajoute un bouton hamburger simple
-    // AMELIORATION: menu burger pour mobile
-    if(window.innerWidth <= 900) {
-        const sideNav = document.getElementById('sideNav');
-        const menuBtn = document.createElement('div');
-        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-        menuBtn.style.position = 'fixed';
-        menuBtn.style.left = '1rem';
-        menuBtn.style.top = '1rem';
-        menuBtn.style.zIndex = '102';
-        menuBtn.style.background = 'var(--bg-surface)';
-        menuBtn.style.width = '44px';
-        menuBtn.style.height = '44px';
-        menuBtn.style.borderRadius = '40px';
-        menuBtn.style.display = 'flex';
-        menuBtn.style.alignItems = 'center';
-        menuBtn.style.justifyContent = 'center';
-        menuBtn.style.boxShadow = 'var(--card-shadow)';
-        menuBtn.style.cursor = 'pointer';
-        menuBtn.style.border = '1px solid var(--border-light)';
-        document.body.appendChild(menuBtn);
-        let menuOpen = false;
-        function toggleMenu() {
-            if(menuOpen) {
-                sideNav.style.transform = 'translateX(-100%)';
-                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-            } else {
-                sideNav.style.transform = 'translateX(0)';
-                menuBtn.innerHTML = '<i class="fas fa-times"></i>';
-            }
-            menuOpen = !menuOpen;
-        }
-        menuBtn.addEventListener('click', toggleMenu);
-        // fermer si clique sur un lien
-        document.querySelectorAll('.nav-item').forEach(link => {
-            link.addEventListener('click', () => {
-                if(window.innerWidth <= 900) {
-                    sideNav.style.transform = 'translateX(-100%)';
-                    menuOpen = false;
-                    menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            toggle.addEventListener('click', function() {
+                if (document.body.hasAttribute('data-theme')) {
+                    document.body.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                    this.innerHTML = '<i class="fas fa-moon"></i>';
+                } else {
+                    document.body.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    this.innerHTML = '<i class="fas fa-sun"></i>';
                 }
             });
+        }
+
+        // ============================================================
+        // 5. CONTACT FORM
+        // ============================================================
+        function initContact() {
+            const form = document.getElementById('contactForm');
+            const feedback = document.getElementById('formFeedback');
+            if (!form) return;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const message = document.getElementById('message').value.trim();
+
+                if (!name || !email || !message) {
+                    feedback.innerHTML = '<span style="color:#ef4444;">⚠️ Tous les champs sont requis.</span>';
+                    return;
+                }
+                if (!email.includes('@') || !email.includes('.')) {
+                    feedback.innerHTML = '<span style="color:#ef4444;">📧 Email invalide.</span>';
+                    return;
+                }
+
+                feedback.innerHTML = '<span style="color:var(--accent-primary);">⏳ Envoi en cours...</span>';
+                setTimeout(() => {
+                    feedback.innerHTML = '<span style="color:#10b981;">✅ Message envoyé ! Je vous répondrai rapidement.</span>';
+                    form.reset();
+                    setTimeout(() => feedback.innerHTML = '', 4000);
+                }, 1200);
+            });
+        }
+
+        // ============================================================
+        // 6. SCROLL REVEAL
+        // ============================================================
+        function initScrollReveal() {
+            const elements = document.querySelectorAll('.project-card, .skill-category, .about-grid > *');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(25px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        }
+
+        // ============================================================
+        // 7. ACTIVE NAV
+        // ============================================================
+        function initActiveNav() {
+            const sections = document.querySelectorAll('.section');
+            const navItems = document.querySelectorAll('.nav-item');
+            if (!sections.length || !navItems.length) return;
+
+            window.addEventListener('scroll', function() {
+                let current = '';
+                sections.forEach(section => {
+                    const top = section.offsetTop - 150;
+                    const height = section.clientHeight;
+                    if (window.pageYOffset >= top && window.pageYOffset < top + height) {
+                        current = section.id;
+                    }
+                });
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('href') === '#' + current) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        // ============================================================
+        // 8. SMOOTH SCROLL
+        // ============================================================
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        }
+
+        // ============================================================
+        // 9. STORAGE SYNC (pour admin)
+        // ============================================================
+        function initStorageSync() {
+            window.addEventListener('storage', function(e) {
+                if (e.key === STORAGE_KEY) {
+                    renderProjects();
+                }
+            });
+        }
+
+        // ============================================================
+        // 10. SKILLS ANIMATION
+        // ============================================================
+        function initSkills() {
+            const bars = document.querySelectorAll('.skill-progress');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const bar = entry.target;
+                        const width = bar.style.width;
+                        bar.style.width = '0%';
+                        setTimeout(() => { bar.style.width = width; }, 100);
+                        observer.unobserve(bar);
+                    }
+                });
+            }, { threshold: 0.5 });
+            bars.forEach(bar => observer.observe(bar));
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProjects();
+            initFilters();
+            initTheme();
+            initContact();
+            initScrollReveal();
+            initActiveNav();
+            initSmoothScroll();
+            initStorageSync();
+            initSkills();
+            console.log('✅ Portfolio KATANGA CLEMENT chargé avec succès');
         });
-    }
-
-    // initial render projects
-    renderProjects('all');
-
-    // Gestion de l'image: si l'image uploads/profile.jpg n'existe pas, on affiche placeholder générique mais éviter ER 
-    // Dans l'image déjà on a mis l'erreur fallback.
-    // Option pour affiner
-</script>
+    </script>
 </body>
 </html>
