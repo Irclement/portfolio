@@ -60,6 +60,120 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 25px var(--accent-glow);
         }
+        .footer {
+            position: relative;
+        }
+        .admin-access-btn {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-muted);
+            opacity: 0.35;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+        .admin-access-btn:hover {
+            opacity: 1;
+            color: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+        .admin-auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+        .admin-auth-modal.active {
+            display: flex;
+        }
+        .admin-auth-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1.5rem;
+            padding: 2.5rem 2rem 2rem;
+            width: 90%;
+            max-width: 320px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+        .admin-auth-close {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .admin-auth-icon {
+            font-size: 1.8rem;
+            color: var(--accent-primary);
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+        .admin-auth-box h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            color: var(--text-primary);
+        }
+        #adminPasswordInput {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .admin-auth-submit {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border-radius: 12px;
+            border: none;
+            background: var(--accent-primary);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .admin-auth-submit:hover {
+            filter: brightness(1.1);
+        }
+        .admin-auth-error {
+            color: #ef4444;
+            font-size: 0.8rem;
+            margin-top: 0.8rem;
+            min-height: 1em;
+        }
+        .admin-auth-box.shake {
+            animation: adminShake 0.4s;
+        }
+        @keyframes adminShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
     </style>
 </head>
 <body>
@@ -245,8 +359,23 @@
         <!-- ==================== FOOTER ==================== -->
         <footer class="footer">
             <p>&copy; 2026 KATANGA CLEMENT — Fait avec <i class="fas fa-heart"></i> à Bukavu</p>
+            <button id="adminAccessBtn" class="admin-access-btn" title="Accès admin">
+                <i class="fas fa-lock"></i>
+            </button>
         </footer>
     </main>
+
+    <!-- ==================== MODAL ACCÈS ADMIN ==================== -->
+    <div id="adminAuthModal" class="admin-auth-modal">
+        <div class="admin-auth-box">
+            <button id="closeAdminAuthBtn" class="admin-auth-close"><i class="fas fa-times"></i></button>
+            <i class="fas fa-lock admin-auth-icon"></i>
+            <h3>Accès administrateur</h3>
+            <input type="password" id="adminPasswordInput" placeholder="Mot de passe" autocomplete="off">
+            <button id="adminAuthSubmit" class="admin-auth-submit">Entrer</button>
+            <p id="adminAuthError" class="admin-auth-error"></p>
+        </div>
+    </div>
 
     <!-- ==================== SCRIPTS ==================== -->
     <script>
@@ -255,41 +384,8 @@
         // ============================================================
         const STORAGE_KEY = 'user_projects_v1';
 
-        const defaultProjects = [
-            {
-                id: 1,
-                title: "Bukavulmmo",
-                description: "Plateforme de location immobilière dédiée à Bukavu. Des milliers de biens dans les communes d'Ibanda, Kadutu et Bagira.",
-                category: "web",
-                tags: ["React", "Node.js", "MongoDB"],
-                image: "project-1-1.png",
-                link: "",
-                icon: "fas fa-home",
-                userCreated: false
-            },
-            {
-                id: 2,
-                title: "Bases Médicales",
-                description: "Application de géolocalisation des bases médicales au Sud-Kivu. Recherche et affichage des structures de santé avec GPS.",
-                category: "mobile",
-                tags: ["React Native", "Firebase", "Mapbox"],
-                image: "project-2.png",
-                link: "",
-                icon: "fas fa-map-marker-alt",
-                userCreated: false
-            },
-            {
-                id: 3,
-                title: "Gestion de stock (POO)",
-                description: "Application de gestion de stock avec catégories, produits et détails. Architecture orientée objet en PHP.",
-                category: "web",
-                tags: ["PHP", "MySQL", "Bootstrap"],
-                image: "project-3.png",
-                link: "",
-                icon: "fas fa-boxes",
-                userCreated: false
-            }
-        ];
+        // Aucun projet par défaut : seuls les projets créés via l'admin sont affichés
+        const defaultProjects = [];
 
         function getProjects() {
             try {
@@ -299,13 +395,12 @@
                     return defaultProjects;
                 }
                 const parsed = JSON.parse(stored);
-                if (!Array.isArray(parsed) || parsed.length === 0) {
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultProjects));
-                    return defaultProjects;
+                if (!Array.isArray(parsed)) {
+                    return [];
                 }
                 return parsed;
             } catch (e) {
-                return defaultProjects;
+                return [];
             }
         }
 
@@ -533,6 +628,51 @@
         }
 
         // ============================================================
+        // 11. ACCÈS ADMIN (protégé par mot de passe)
+        // ============================================================
+        const ADMIN_PASSWORD = '8567943';
+
+        function initAdminAccess() {
+            const accessBtn = document.getElementById('adminAccessBtn');
+            const authModal = document.getElementById('adminAuthModal');
+            const authBox = authModal.querySelector('.admin-auth-box');
+            const closeBtn = document.getElementById('closeAdminAuthBtn');
+            const passwordInput = document.getElementById('adminPasswordInput');
+            const submitBtn = document.getElementById('adminAuthSubmit');
+            const errorMsg = document.getElementById('adminAuthError');
+
+            function openAuthModal() {
+                authModal.classList.add('active');
+                passwordInput.value = '';
+                errorMsg.textContent = '';
+                setTimeout(() => passwordInput.focus(), 100);
+            }
+
+            function closeAuthModal() {
+                authModal.classList.remove('active');
+            }
+
+            function tryUnlock() {
+                if (passwordInput.value === ADMIN_PASSWORD) {
+                    window.location.href = 'admin-projects.html';
+                } else {
+                    errorMsg.textContent = 'Mot de passe incorrect';
+                    authBox.classList.remove('shake');
+                    void authBox.offsetWidth;
+                    authBox.classList.add('shake');
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
+            }
+
+            accessBtn.addEventListener('click', openAuthModal);
+            closeBtn.addEventListener('click', closeAuthModal);
+            authModal.addEventListener('click', (e) => { if (e.target === authModal) closeAuthModal(); });
+            submitBtn.addEventListener('click', tryUnlock);
+            passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryUnlock(); });
+        }
+
+        // ============================================================
         // INIT
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
@@ -545,6 +685,7 @@
             initSmoothScroll();
             initStorageSync();
             initSkills();
+            initAdminAccess();
             console.log('✅ Portfolio KATANGA CLEMENT chargé avec succès');
         });
     </script>
