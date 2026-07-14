@@ -414,16 +414,9 @@
     <script>
         const STORAGE_KEY = 'user_projects_v1';
         
-        // Projets par défaut (identiques à ceux du portfolio)
+        // Aucun projet par défaut : seuls les projets créés via l'admin sont affichés
         function getDefaultProjects() {
-            return [
-                { id: 1, title: "Nebula Dashboard", description: "Plateforme analytics temps réel pour startups SaaS, interface interactive et graphiques dynamiques.", category: "web", tags: ["React", "D3.js", "Firebase"], image: "", link: "", icon: "fas fa-chart-line", userCreated: false },
-                { id: 2, title: "Bloom Studio", description: "Refonte UI/UX pour un studio créatif, design minimaliste et expérience immersive.", category: "uiux", tags: ["Figma", "Tailwind", "GSAP"], image: "", link: "", icon: "fas fa-palette", userCreated: false },
-                { id: 3, title: "EcoRide Mobile", description: "Application de covoiturage éco-responsable avec cartographie et paiement intégré.", category: "mobile", tags: ["React Native", "Node.js", "MongoDB"], image: "", link: "", icon: "fas fa-mobile-alt", userCreated: false },
-                { id: 4, title: "Artemis E-commerce", description: "Site e-commerce complet avec panier, authentification et dashboard admin.", category: "web", tags: ["Next.js", "Stripe", "Prisma"], image: "", link: "", icon: "fas fa-shopping-cart", userCreated: false },
-                { id: 5, title: "Horizon UI Kit", description: "Système de design modulaire et accessible pour développeurs & designers.", category: "uiux", tags: ["Figma", "Storybook", "Vue"], image: "", link: "", icon: "fas fa-layer-group", userCreated: false },
-                { id: 6, title: "FitTrack", description: "Application de suivi sportif avec objectifs personnalisés et partage social.", category: "mobile", tags: ["Flutter", "Firebase", "API REST"], image: "", link: "", icon: "fas fa-heartbeat", userCreated: false }
-            ];
+            return [];
         }
 
         function readStoredProjects() {
